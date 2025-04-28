@@ -4,6 +4,7 @@ permissions:
   contents: write
   issues: write
   actions: write
+  workflows: write
 
 on:
   schedule:
@@ -18,7 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          token: ${{ secrets.lobeUpdate }}   # 使用带 workflow 权限的 PAT :contentReference[oaicite:3]{index=3}
       - name: Clean issue notice
         uses: actions-cool/issues-helper@v3
         with:
@@ -32,7 +34,7 @@ jobs:
           upstream_sync_repo: lobehub/lobe-chat
           upstream_sync_branch: main
           target_sync_branch: main
-          target_repo_token: ${{ secrets.GITHUB_TOKEN }} # automatically generated, no need to set
+          target_repo_token: ${{ secrets.lobeUpdate }} 
           test_mode: false
 
       - name: Sync check
